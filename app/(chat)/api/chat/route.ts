@@ -46,7 +46,7 @@ const blocksTools: AllowedTools[] = [
 const weatherTools: AllowedTools[] = ['getWeather'];
 
 const allTools: AllowedTools[] = [...blocksTools, ...weatherTools];
-
+export const guestUserId = '93a35827-8b95-4a34-adec-1860657534df'; // 固定的 UUID 作为游客的 userId
 export async function POST(request: Request) {
   const {
     id,
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     await request.json();
 
   const session = await auth();
-  const userId = session?.user?.id || 'guest'
+  const userId = session?.user?.id || guestUserId;
   // if (!session || !session.user || !session.user.id) {
   //   // return new Response('Unauthorized', { status: 401 });
   //   userId = 'guest';
@@ -75,18 +75,18 @@ export async function POST(request: Request) {
     return new Response('No user message found', { status: 400 });
   }
 
-  const chat = await getChatById({ id });
-
-  if (!chat) {
-    const title = await generateTitleFromUserMessage({ message: userMessage });
-    await saveChat({ id, userId, title });
+  if (userId) {
+    const chat = await getChatById({ id });
+    if (!chat) {
+      const title = await generateTitleFromUserMessage({ message: userMessage });
+      await saveChat({ id, userId, title });
+    }
+    await saveMessages({
+      messages: [
+        { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
+      ],
+    });
   }
-
-  await saveMessages({
-    messages: [
-      { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
-    ],
-  });
 
   const streamingData = new StreamData();
 
@@ -329,8 +329,7 @@ export async function POST(request: Request) {
     onFinish: async ({ responseMessages }) => {
       if (userId) {
         try {
-          const responseMessagesWithoutIncompleteToolCalls =
-            sanitizeResponseMessages(responseMessages);
+          const responseMessagesWithoutIncompleteToolCalls = sanitizeResponseMessages(responseMessages);
 
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map(
@@ -354,7 +353,7 @@ export async function POST(request: Request) {
             ),
           });
         } catch (error) {
-          console.error('Failed to save chat');
+          console.error('Failed to onFinish', error);
         }
       }
 

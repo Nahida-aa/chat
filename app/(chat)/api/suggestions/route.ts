@@ -1,5 +1,6 @@
 import { auth } from '@/app/(auth)/auth';
 import { getSuggestionsByDocumentId } from '@/lib/db/queries';
+import { guestUserId } from '../chat/route';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -10,10 +11,10 @@ export async function GET(request: Request) {
   }
 
   const session = await auth();
-
-  if (!session || !session.user) {
-    return new Response('Unauthorized', { status: 401 });
-  }
+  const userId = session?.user?.id || guestUserId;
+  // if (!session || !session.user) {
+  //   return new Response('Unauthorized', { status: 401 });
+  // }
 
   const suggestions = await getSuggestionsByDocumentId({
     documentId,
@@ -25,7 +26,7 @@ export async function GET(request: Request) {
     return Response.json([], { status: 200 });
   }
 
-  if (suggestion.userId !== session.user.id) {
+  if (suggestion.userId !== userId) {
     return new Response('Unauthorized', { status: 401 });
   }
 

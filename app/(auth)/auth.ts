@@ -5,6 +5,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { getUser } from '@/lib/db/queries';
 
 import { authConfig } from './auth.config';
+import { guestUserId } from '../(chat)/api/chat/route';
 
 interface ExtendedSession extends Session {
   user: User;
@@ -47,6 +48,13 @@ export const {
     }) {
       if (session.user) {
         session.user.id = token.id as string;
+      }else {
+        // 设置游客的 userId
+        session.user = {
+          id: guestUserId,
+          email: 'guest@example.com',
+          name: 'Guest',
+        } as User;
       }
 
       return session;

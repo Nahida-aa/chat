@@ -4,6 +4,7 @@ import {
   getDocumentsById,
   saveDocument,
 } from '@/lib/db/queries';
+import { guestUserId } from '../chat/route';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -14,10 +15,11 @@ export async function GET(request: Request) {
   }
 
   const session = await auth();
+  const userId = session?.user?.id || guestUserId;
 
-  if (!session || !session.user) {
-    return new Response('Unauthorized', { status: 401 });
-  }
+  // if (!session || !session.user) {
+  //   return new Response('Unauthorized', { status: 401 });
+  // }
 
   const documents = await getDocumentsById({ id });
 
@@ -27,7 +29,7 @@ export async function GET(request: Request) {
     return new Response('Not Found', { status: 404 });
   }
 
-  if (document.userId !== session.user.id) {
+  if (document.userId !== userId) {
     return new Response('Unauthorized', { status: 401 });
   }
 
@@ -43,20 +45,21 @@ export async function POST(request: Request) {
   }
 
   const session = await auth();
+  const userId = session?.user?.id || guestUserId;
 
-  if (!session) {
-    return new Response('Unauthorized', { status: 401 });
-  }
+  // if (!session) {
+  //   return new Response('Unauthorized', { status: 401 });
+  // }
 
   const { content, title }: { content: string; title: string } =
     await request.json();
 
-  if (session.user?.id) {
+  if (userId) {
     const document = await saveDocument({
       id,
       content,
       title,
-      userId: session.user.id,
+      userId,
     });
 
     return Response.json(document, { status: 200 });

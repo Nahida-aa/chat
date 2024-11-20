@@ -61,6 +61,7 @@ export async function saveChat({
   title: string;
 }) {
   try {
+    console.log(`lib/db/queries.ts: saveChat: id: ${id}, userId: ${userId}, title: ${title}`);
     return await db.insert(chat).values({
       id,
       createdAt: new Date(),
@@ -109,6 +110,11 @@ export async function getChatById({ id }: { id: string }) {
 }
 
 export async function saveMessages({ messages }: { messages: Array<Message> }) {
+  if (messages.length === 0) {
+    console.warn('No messages to save')
+    return
+  }
+  console.log(`lib/db/queries.ts: saveMessages: messages: ${JSON.stringify(messages)}`);
   try {
     return await db.insert(message).values(messages);
   } catch (error) {

@@ -22,7 +22,7 @@ export const Overview = () => {
         </p>
         <p>
           以 chatbot{' '}
-          为基础的 AI 应用聚合平台, chatbot 部分使用 Next.js 和 Vercel 的 AI SDK 构建。
+          为基础的 AI 应用聚合平台。目前仅实现 chatbot 部分使用 Next.js 和 Vercel 的 AI SDK 构建。
           它在服务器端使用 {' '}
           <code className="rounded-md bg-muted px-1 py-0.5">streamText</code>{' '}
           函数，在客户端使用{' '}
