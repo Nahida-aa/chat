@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     await request.json();
 
   const session = await auth();
-  let userId = 'guest';
+  const userId = session?.user?.id || 'guest'
   // if (!session || !session.user || !session.user.id) {
   //   // return new Response('Unauthorized', { status: 401 });
   //   userId = 'guest';
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
 
   if (!chat) {
     const title = await generateTitleFromUserMessage({ message: userMessage });
-    await saveChat({ id, userId: session.user.id || userId, title });
+    await saveChat({ id, userId, title });
   }
 
   await saveMessages({
@@ -159,12 +159,12 @@ export async function POST(request: Request) {
 
           streamingData.append({ type: 'finish', content: '' });
 
-          if (session.user?.id) {
+          if (userId) {
             await saveDocument({
               id,
               title,
               content: draftText,
-              userId: session.user.id,
+              userId,
             });
           }
 
@@ -237,12 +237,12 @@ export async function POST(request: Request) {
 
           streamingData.append({ type: 'finish', content: '' });
 
-          if (session.user?.id) {
+          if (userId) {
             await saveDocument({
               id,
               title: document.title,
               content: draftText,
-              userId: session.user.id,
+              userId: userId,
             });
           }
 
@@ -306,9 +306,8 @@ export async function POST(request: Request) {
             suggestions.push(suggestion);
           }
 
-          if (session.user?.id) {
-            const userId = session.user.id;
-
+          if (userId) {
+            
             await saveSuggestions({
               suggestions: suggestions.map((suggestion) => ({
                 ...suggestion,
@@ -328,7 +327,7 @@ export async function POST(request: Request) {
       },
     },
     onFinish: async ({ responseMessages }) => {
-      if (session.user?.id) {
+      if (userId) {
         try {
           const responseMessagesWithoutIncompleteToolCalls =
             sanitizeResponseMessages(responseMessages);
