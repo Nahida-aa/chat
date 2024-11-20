@@ -1,12 +1,12 @@
 'use client';
+
 import type {
   Attachment,
   ChatRequestOptions,
   CreateMessage,
   Message,
-} from 'ai'
-// import cx from 'classnames';
-import { cn } from "@/lib/utils"
+} from 'ai';
+import cx from 'classnames';
 import { motion } from 'framer-motion';
 import type React from 'react';
 import {
@@ -19,15 +19,15 @@ import {
   type ChangeEvent,
 } from 'react';
 import { toast } from 'sonner';
-
 import { useLocalStorage, useWindowSize } from 'usehooks-ts';
 
 import { sanitizeUIMessages } from '@/lib/utils';
 
-import { ArrowUpIcon, PaperclipIcon, StopIcon } from './icons';
-import { PreviewAttachment } from './preview-attachment';
+import { ArrowUpIcon, PaperclipIcon, StopIcon } from '@/components/icons';
+import { PreviewAttachment } from '@/components/preview-attachment';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { SendHorizontal } from 'lucide-react';
 
 const suggestedActions = [
   {
@@ -268,11 +268,11 @@ export function MultimodalInput({
         placeholder="Send a message..."
         value={input}
         onChange={handleInput}
-        className={cn(
-          'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-xl text-base bg-purple-400/5',
+        className={cx(
+          'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-xl text-base bg-muted pt-1.5 px-2 pm-2',
           className,
         )}
-        rows={3}
+        rows={2}
         autoFocus
         onKeyDown={(event) => {
           if (event.key === 'Enter' && !event.shiftKey) {
@@ -287,41 +287,43 @@ export function MultimodalInput({
         }}
       />
 
-      {isLoading ? (
-        <Button
-          className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 border dark:border-zinc-600"
-          onClick={(event) => {
-            event.preventDefault();
-            stop();
-            setMessages((messages) => sanitizeUIMessages(messages));
-          }}
-        >
-          <StopIcon size={14} />
-        </Button>
-      ) : (
-        <Button
-          className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 border dark:border-zinc-600"
-          onClick={(event) => {
-            event.preventDefault();
-            submitForm();
-          }}
-          disabled={input.length === 0 || uploadQueue.length > 0}
-        >
-          <ArrowUpIcon size={14} />
-        </Button>
-      )}
+      <div className="absolute h-[22px] bottom-2 left-2 right-2 flex items-center justify-between ">
+          <Button
+            className=" p-0 h-fit dark:border-zinc-700"
+            onClick={(event) => {
+              event.preventDefault();
+              fileInputRef.current?.click();
+            }}
+            variant="ghost"
+            disabled={isLoading}
+          >
+            <PaperclipIcon size={16} />
+          </Button>
 
-      <Button
-        className="rounded-full p-1.5 h-fit absolute bottom-2 right-11 m-0.5 dark:border-zinc-700"
-        onClick={(event) => {
-          event.preventDefault();
-          fileInputRef.current?.click();
-        }}
-        variant="outline"
-        disabled={isLoading}
-      >
-        <PaperclipIcon size={14} />
-      </Button>
+          {isLoading ? (
+            <Button variant="ghost"
+              className=" p-0 h-fit  dark:border-zinc-600"
+              onClick={(event) => {
+                event.preventDefault();
+                stop();
+                setMessages((messages) => sanitizeUIMessages(messages));
+              }}
+            >
+              <StopIcon size={16} />
+            </Button>
+          ) : (
+            <Button variant="ghost"
+              className=" p-0 h-fit  dark:border-zinc-600"
+              onClick={(event) => {
+                event.preventDefault();
+                submitForm();
+              }}
+              disabled={input.length === 0 || uploadQueue.length > 0}
+            >
+              <SendHorizontal size={16} />
+            </Button>
+          )}
+        </div>
     </div>
   );
 }

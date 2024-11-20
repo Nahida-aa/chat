@@ -22,7 +22,7 @@ interface DocumentToolResultProps {
   block: UIBlock;
   setBlock: (value: SetStateAction<UIBlock>) => void;
 }
-
+// 跳转到文档 的按钮 (用于聊天界面中)
 export function DocumentToolResult({
   type,
   result,

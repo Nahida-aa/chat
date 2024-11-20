@@ -15,6 +15,7 @@ export function SubmitButton({
 }) {
   const { pending } = useFormStatus();
 
+  console.log(`pending: ${pending}, isSuccessful: ${isSuccessful}`);
   return (
     <Button
       type={pending ? 'button' : 'submit'}

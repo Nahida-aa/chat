@@ -23,9 +23,9 @@ import Link from 'next/link';
 export function AppSidebar({ user }: { user: User | undefined }) {
   const router = useRouter();
   const { setOpenMobile } = useSidebar();
-
+  const displayUser = user || { email: 'guest@example.com', name: 'Guest' }
   return (
-    <Sidebar className="group-data-[side=left]:border-r-0">
+    <Sidebar className="group-data-[side=left]:border-r-0 backdrop-blur-md">
       <SidebarHeader>
         <SidebarMenu>
           <div className="flex flex-row justify-between items-center">
@@ -63,13 +63,13 @@ export function AppSidebar({ user }: { user: User | undefined }) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="gap-0">
-        {user && (
+        {/* {displayUser && ( */}
           <SidebarGroup>
             <SidebarGroupContent>
-              <SidebarUserNav user={user} />
+              <SidebarUserNav user={displayUser} />
             </SidebarGroupContent>
           </SidebarGroup>
-        )}
+        {/* )} */}
       </SidebarFooter>
     </Sidebar>
   );

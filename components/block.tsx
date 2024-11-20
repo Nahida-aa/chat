@@ -248,17 +248,17 @@ export function Block({
   const isMobile = windowWidth ? windowWidth < 768 : false;
 
   const [_, copyToClipboard] = useCopyToClipboard();
-
+  // 覆盖当前界面
   return (
     <motion.div
-      className="flex flex-row h-dvh w-dvw fixed top-0 left-0 z-50 bg-muted"
+      className="flex flex-row h-dvh w-dvw fixed top-0 left-0 z-50 bg-m"
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { delay: 0.4 } }}
     >
       {!isMobile && (
         <motion.div
-          className="relative w-[400px] bg-muted dark:bg-background h-dvh shrink-0"
+          className="relative w-[400px]  h-dvh shrink-0"
           initial={{ opacity: 0, x: 10, scale: 1 }}
           animate={{
             opacity: 1,
@@ -328,7 +328,7 @@ export function Block({
                 setAttachments={setAttachments}
                 messages={messages}
                 append={append}
-                className="bg-background dark:bg-muted"
+                className=" dark:bg-muted"
                 setMessages={setMessages}
               />
             </form>
@@ -337,7 +337,7 @@ export function Block({
       )}
 
       <motion.div
-        className="fixed dark:bg-muted bg-background h-dvh flex flex-col shadow-xl overflow-y-scroll"
+        className="fixed dark:bg-muted  h-dvh flex flex-col shadow-xl overflow-y-scroll"
         initial={
           isMobile
             ? {
@@ -513,7 +513,7 @@ export function Block({
           </div>
         </div>
 
-        <div className="prose dark:prose-invert dark:bg-muted bg-background h-full overflow-y-scroll px-4 py-8 md:p-20 !max-w-full pb-40 items-center">
+        <div className="prose dark:prose-invert dark:bg-muted  h-full overflow-y-scroll px-4 py-8 md:p-20 !max-w-full pb-40 items-center">
           <div className="flex flex-row max-w-[600px] mx-auto">
             {isDocumentsFetching && !block.content ? (
               <DocumentSkeleton />

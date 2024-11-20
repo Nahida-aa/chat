@@ -60,9 +60,9 @@ export const register = async (
       email: formData.get('email'),
       password: formData.get('password'),
     });
-
+    // 
+    console.log(`app/(auth)/actions.ts: 开始检测用户是否存在`)
     const [user] = await getUser(validatedData.email);
-
     if (user) {
       return { status: 'user_exists' } as RegisterActionState;
     }

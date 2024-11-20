@@ -4,6 +4,7 @@ import Image from 'next/image';
 import type { User } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/navigation';
 
 import {
   DropdownMenu,
@@ -20,6 +21,8 @@ import {
 
 export function SidebarUserNav({ user }: { user: User }) {
   const { setTheme, theme } = useTheme();
+  const router = useRouter();
+  const isGuest = user.email === 'guest@example.com';
 
   return (
     <SidebarMenu>
@@ -34,7 +37,7 @@ export function SidebarUserNav({ user }: { user: User }) {
                 height={24}
                 className="rounded-full"
               />
-              <span className="truncate">{user?.email}</span>
+              <span className="truncate">{isGuest ? "未登录" : user?.email}</span>
               <ChevronUp className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -54,12 +57,16 @@ export function SidebarUserNav({ user }: { user: User }) {
                 type="button"
                 className="w-full cursor-pointer"
                 onClick={() => {
-                  signOut({
-                    redirectTo: '/',
-                  });
+                  if (isGuest) {
+                    router.push('/login'); // 导航到登录页面
+                  } else {
+                    signOut({
+                      redirectTo: '/',
+                    });
+                  }
                 }}
               >
-                Sign out
+                {isGuest ? 'Sign in' : 'Sign out'}
               </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
