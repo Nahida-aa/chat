@@ -159,7 +159,9 @@
     src: url(/fonts/geist-mono.woff2) format("woff2");
   }
 }
-
+html, body {
+  height: 100%;
+}
 .skeleton {
   * {
     pointer-events: none !important;

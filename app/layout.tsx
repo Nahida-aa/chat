@@ -42,7 +42,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en" className='min-h-screen min-w-[360px] flex h-full'
       // `next-themes` injects an extra classname to the body element to avoid
       // visual flicker before hydration. Hence the `suppressHydrationWarning`
       // prop is necessary to avoid the React hydration mismatch warning.
@@ -56,7 +56,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased h-screen flex min-w-[360px]">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
