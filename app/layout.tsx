@@ -56,7 +56,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased h-screen flex min-w-[360px]">
+      <body className="antialiased w-full">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
