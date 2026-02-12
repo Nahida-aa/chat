@@ -1,7 +1,4 @@
 'use client'
-import { Modal } from '@/app/a/ui/modal/_comp/Modal'
-import { useConfirm, useLoading } from '@/app/a/ui/modal/modal.provider'
-import { toast } from '@/app/a/ui/toast'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -14,8 +11,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Separator } from '@/components/ui/separator'
-import type { UserOrTeam } from '@/features/user/action'
 
 import { Ellipsis } from 'lucide-react'
 

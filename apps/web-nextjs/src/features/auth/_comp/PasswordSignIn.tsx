@@ -4,11 +4,11 @@ import { User2Icon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { authClient } from '../client'
 import Link from 'next/link'
-import { toast } from '../../../app/a/ui/toast'
 import z from 'zod'
 
 import { useSession } from '@/features/auth/hook/query'
 import { useAppForm } from '@/hooks/useAppForm'
+import { toastError } from '@/components/uix/toast'
 
 const formSchema = z.object({
   phoneNumberOrEmail: phoneOrEmailSchema,
@@ -63,7 +63,7 @@ export const PasswordSignIn = () => {
             },
           )
           if (error) {
-            toast.error(error, '登录失败')
+            toastError(error, '登录失败')
             return
           }
         } else if (inputType === 'phone') {
@@ -93,15 +93,15 @@ export const PasswordSignIn = () => {
             if (error.code === 'INVALID_PHONE_NUMBER_OR_PASSWORD') {
               error.message = '手机号或密码错误'
             }
-            toast.error(error)
+            toastError(error)
             return
           }
         } else {
-          toast.error('无效的登录方式')
+          toastError('无效的登录方式')
         }
         router.push(callbackUrl)
       } catch (error) {
-        toast.error(error)
+        toastError(error)
       }
     },
   })

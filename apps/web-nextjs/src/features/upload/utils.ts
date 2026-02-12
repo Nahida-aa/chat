@@ -1,4 +1,4 @@
-import { s3PublicUrl } from "@/lib/env/client"
+import { s3PublicUrl } from "@/lib/config"
 import type { Accept } from "react-dropzone"
 import z from "zod"
 
