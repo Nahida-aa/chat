@@ -1,19 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { useSocketIo } from './provider';
 // import cApi from "../../api/app/client";
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useLocalStorage } from 'usehooks-ts';
 import { IOIndicator } from '@/lib/ws/IOIndicator';
+import { nanoid } from 'nanoid';
+import type { DemoMessage } from '@/lib/ws/types';
+import { testSendToAll } from '@/lib/ws/action';
+import { Input } from '@/components/ui/input';
 
-interface Message {
-  id: string;
-  content: string;
-  userId: string;
-  channelId: string;
-  createdAt: Date;
+
+const Login = ({setUserId}: {setUserId: (id: string) => void}) => {
+  const [value, setValue] = useState('');
+  return <div  className='flex gap-2'><Input value={value} onChange={(e) => setValue(e.target.value)} /><Button onClick={() => setUserId(value)}>login</Button></div>
 }
 const ChatInput = () => {};
 export const SocketIODemo = () => {
@@ -21,7 +23,7 @@ export const SocketIODemo = () => {
   const [channelId, setChannelId] = useLocalStorage('channelId', '');
   const { ioC, isConnected, transport } = useSocketIo();
   const [content, setContent] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<DemoMessage[]>([]);
   const [isSending, setIsSending] = useState(false);
 
   // 监听消息和加入频道
@@ -30,6 +32,9 @@ export const SocketIODemo = () => {
     ioC.onAny((event, data) => {
       console.log({ event, data });
     });
+    ioC.on('demoMsg', (data) => {
+      setMessages((prev) => [...prev, data]);
+    })
     // 加入频道
     // if (isAnonymous) {
     //   sendData({
@@ -42,6 +47,9 @@ export const SocketIODemo = () => {
     // }
 
     // 监听新消息
+    return () => {
+      ioC.off('demoMsg');
+    }
   }, [ioC, isConnected, userId, channelId]);
 
   const handleSendMessage = async () => {
@@ -49,18 +57,23 @@ export const SocketIODemo = () => {
 
     try {
       setIsSending(true);
-      const message = {
+      const message: DemoMessage = {
+        id: nanoid(),
         channelId,
         userId,
-        content: content,
-        contentType: 'text',
+        content,
+        createdAt: new Date(),
       };
 
-      // 通过 HTTP API 发送消息（会触发 WebSocket 广播）
+      // 通过 HTTP API 通知服务端 广播消息
+      const ok = await testSendToAll(message);
       // const { data, error } = await cApi.channel.channel.message.$post(message);
       // const ret = await cApi.sendChannelMessage(message);
-      const ret = '';
-      toast.success(`Message sent: ${ret}`);
+      if (!ok) {
+        toast.error('server not find io');
+        return;
+      }
+      toast.success(`Message sent: ${ok}`);
       setContent('');
     } catch (error) {
       console.error('Send message error:', error);
@@ -75,7 +88,7 @@ export const SocketIODemo = () => {
       <IOIndicator />
       <div className="w-full max-w-md">
         <div>
-          <p>User ID: {userId}</p>
+          {userId ? <p>User ID: {userId}</p>: <Login setUserId={setUserId} />}
           <p>Channel ID: {channelId}</p>
           <p>Messages: {messages.length}</p>
         </div>
@@ -100,15 +113,7 @@ export const SocketIODemo = () => {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Type your message..."
             className="flex-1 px-3 py-2 border rounded"
-            onKeyPress={(e) => {
-              if (e.key === 'Enter' && !isSending) {
-                if (!userId) {
-                  toast.error('User ID is required to send messages');
-                  return;
-                }
-                handleSendMessage();
-              }
-            }}
+            onClick={(e) => handleSendMessage()}
           />
           <Button
             onClick={handleSendMessage}

@@ -55,7 +55,8 @@ export function initIo(httpServer: HttpServer) {
     console.log("Socket.IO already initialized");
     return globalThis.io;
   }
-  var io = new IoServer<
+  console.log("Initializing Socket.IO...");
+  globalThis.io = new IoServer<
     ClientToServerEvents,
     ServerToClientEvents,
     InterServerEvents,
@@ -71,8 +72,12 @@ export function initIo(httpServer: HttpServer) {
     pingTimeout: 15000, // 15s 心跳，防 zombie
     allowEIO3: true, // 兼容旧客户端，减 polling 开销
   });
+  if (!io) {
+    console.log("Socket.IO initialization failed");
+    return
+  }
 
-  const onlineUsers = initOnlineUsers();
+   initOnlineUsers();
   // 新增：用户房间跟踪 Map<userId, Set<roomId>>
   const userRooms = new Map<string, Set<string>>();
   const setRoom = (userId: string, roomIds?: Set<string>) => {

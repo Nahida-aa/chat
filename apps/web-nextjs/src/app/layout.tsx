@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { SocketIoProvider } from '@/lib/ws/provider';
 import { CLientProvider } from '@/components/providers/ClientProvider';
+import { Toaster } from 'sonner';
 
 const font = localFont({
   src: [
@@ -39,7 +40,15 @@ export default function RootLayout({
       >
         <CLientProvider>
 
-        <SocketIoProvider>{children}</SocketIoProvider>
+        <SocketIoProvider>{children}
+                              <Toaster
+                      position="top-right"
+                      richColors
+                      className="bg-transparent pointer-events-auto!"
+                      duration={60000}
+                      // style={{ pointerEvents: "auto" }}
+                    />
+        </SocketIoProvider>
         </CLientProvider>
       </body>
     </html>

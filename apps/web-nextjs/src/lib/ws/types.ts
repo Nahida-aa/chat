@@ -1,9 +1,17 @@
 // lib/ws/types.ts
 
 import type { MsgOut } from "@/features/community/schema/zod";
+export interface DemoMessage {
+  id: string;
+  content: string;
+  userId: string;
+  channelId: string;
+  createdAt: Date;
+}
 
 // https://socket.io/docs/v4/typescript/
 export interface ServerToClientEvents {
+  demoMsg: (msg: DemoMessage) => void;
   msg: (msg: MsgOut) => void;
   user_online: (data: { userId: string; channelId?: string }) => void;
   user_offline: (data: { userId: string }) => void;
