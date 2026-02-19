@@ -1,13 +1,13 @@
-import { defineConfig } from 'vite'
-import { devtools } from '@tanstack/devtools-vite'
-import { paraglideVitePlugin } from '@inlang/paraglide-js'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import viteReact from '@vitejs/plugin-react'
-import viteTsConfigPaths from 'vite-tsconfig-paths'
-import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite';
+import { devtools } from '@tanstack/devtools-vite';
+import { paraglideVitePlugin } from '@inlang/paraglide-js';
+import { tanstackStart } from '@tanstack/react-start/plugin/vite';
+import viteReact from '@vitejs/plugin-react';
+import viteTsConfigPaths from 'vite-tsconfig-paths';
+import { fileURLToPath, URL } from 'node:url';
 
-import tailwindcss from '@tailwindcss/vite'
-import { nitro } from 'nitro/vite'
+import tailwindcss from '@tailwindcss/vite';
+import { nitro } from 'nitro/vite';
 // import neon from './neon-vite-plugin.ts'
 
 const config = defineConfig({
@@ -23,13 +23,14 @@ const config = defineConfig({
       outdir: './src/paraglide',
       strategy: ['url'],
     }),
-    nitro({ preset: "bun",
-    //         vercel: { 
-    //     functions: { 
-    //       runtime: "bun1.x", 
-    //     }, 
-    // }, 
-     }),
+    nitro({
+      // preset: 'bun',
+      //         vercel: {
+      //     functions: {
+      //       runtime: "bun1.x",
+      //     },
+      // },
+    }),
     // neon,
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
@@ -43,6 +44,9 @@ const config = defineConfig({
       },
     }),
   ],
-})
+  nitro: {
+    preset: 'bun',
+  },
+});
 
-export default config
+export default config;
