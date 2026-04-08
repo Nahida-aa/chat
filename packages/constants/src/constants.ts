@@ -1,2 +1,1 @@
-export const CONSTANT = 'Hello from your Hono API!';
-export const wsPath = '/api/ws';
+export const CONSTANT = 'Hello from constants!';

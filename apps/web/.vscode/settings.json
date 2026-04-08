@@ -1,0 +1,60 @@
+{
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "search.exclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit"
+  },
+     "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+	"explorer.fileNesting.patterns": {
+		"*.api.ts": "$(capture).*api.ts, $(capture).func.ts, $(capture).table.ts, $(capture).tables.ts, $(capture).schema.ts, $(capture).schemas.ts, $(capture).*.schema.ts, $(capture).*const.ts, $(capture).utils.ts, $(capture).permission*.ts, $(capture).*service.ts, $(capture).*sdk.ts",
+		"*.tsx": "$(capture).*.tsx, $(capture).*.ts, $(capture).rq.ts, $(capture).mutate.ts, $(capture).*hook.ts, $(capture).*context.ts, $(capture).*store.ts, -$(capture).*, $(capture)*.css",
+		"*.ts": "$(capture).*.ts, $(capture).*.tsx",
+		// "*.$.ts": "$(capture).*.ts",
+		"*.ui.tsx": "$(capture).*.tsx, $(capture).*.ui.tsx, $(capture).fields.tsx, $(capture).comp.tsx, $(capture).rq.ts, $(capture).hook.ts, $(capture).mutate.ts, $(capture).query.ts",
+		// tanstack start
+		"router.tsx": "routeTree.gen.ts, server.ts, client.tsx",
+		// "demo.tsx": "demo.tsx, demo.*.tsx, demo.i18n.tsx",
+		"styles.css": "css.ts",
+		"db.schema.ts": "db.*.ts",
+    "orpc.router.ts": "orpc.*.ts",
+		".env": ".env.*",
+		".env.local": ".env.*",
+		"env.ts": "config.ts, env.*.ts",
+		"deploy.md": ".gitignore, ecosystem.config.*, deploy*, swap.sh, cleanup_old.sh, update.sh, blue-green-deploy.sh, verify-deployment.sh, .dockerignore,docker-compose.yml, Dockerfile*, *.tar",
+		"tsconfig.json": "tsconfig.*.json, next-env.d.ts, env.d.ts, biome.json*,",
+		"next.config.*": "postcss.config.*, tailwind.config.*, .vercelignore, mdx-components.tsx, proxy.ts, server.ts",
+		"vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*, content-collections.ts",
+		"package.json": "package-lock.json, nodemon.json, pnpm*, .yarnrc*, yarn*, bun.lock,  .eslint*, eslint*,  .oxlint*, oxlint*, .prettier*,  prettier*, .editorconfig, .npmrc, drizzle.config.ts, components.json, .cta.json,  auth-schema.ts",
+		"README.md": "CHANGELOG.md, LICENSE, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, readme.*, *.http, *.rest, migrate-from-next-js.md",
+		"AGENTS.md": ".cursorrules"
+	}
+}

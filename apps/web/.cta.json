@@ -1,0 +1,32 @@
+{
+  "projectName": "web",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "bun",
+  "includeExamples": true,
+  "tailwind": true,
+  "addOnOptions": {},
+  "envVarValues": {
+    "CONVEX_DEPLOYMENT": "chat",
+    "VITE_CONVEX_URL": "https://beaming-kingfisher-413.convex.cloud"
+  },
+  "git": false,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react",
+  "chosenAddOns": [
+    "biome",
+    "convex",
+    "ai",
+    "compiler",
+    "form",
+    "mcp",
+    "paraglide",
+    "t3env",
+    "shadcn",
+    "table",
+    "better-auth",
+    "store",
+    "tanstack-query"
+  ]
+}
