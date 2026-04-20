@@ -1,5 +1,6 @@
 {
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": [    "src", // 🚀 建议只包含 src，避免扫描到 dist、node_modules 或顶级配置文件
+    "vite.config.ts" ],
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",

@@ -54,7 +54,8 @@
 		"rules": {
 			"recommended": true,
 			"security": {
-				"noDangerouslySetInnerHtml": "info"
+				"noDangerouslySetInnerHtml": "info",
+        "noBlankTarget": "info"
 			},
 
 			"correctness": {
@@ -80,7 +81,8 @@
 				"noStaticElementInteractions": "off",
 				"useSemanticElements": "info",
 				"noSvgWithoutTitle": "off",
-				"useAltText": "off"
+				"useAltText": "off",
+				"noLabelWithoutControl": "off"
 			},
 			"style": {
 				"noNonNullAssertion": "info"

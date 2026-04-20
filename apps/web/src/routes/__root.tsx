@@ -12,6 +12,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { createServerFn } from '@tanstack/react-start';
 import { ThemeProvider } from '#/components/app/theme-provider';
+import { TooltipProvider } from '#/components/ui/tooltip.tsx';
 import { authClient } from '#/lib/auth-client';
 import { getToken } from '#/lib/auth-server';
 import { getLocale } from '#/paraglide/runtime';
@@ -97,9 +98,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body className="font-sans antialiased wrap-anywhere selection:bg-[rgba(79,184,178,0.24)]">
-				<Header />
-				{children}
-				<Footer />
+				<TooltipProvider>
+					<Header />
+					{children}
+					<Footer />
+				</TooltipProvider>
 				<TanStackDevtools
 					config={{
 						position: 'bottom-right',

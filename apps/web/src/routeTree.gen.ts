@@ -13,7 +13,6 @@ import { Route as McpRouteImport } from './routes/mcp'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as MainRouteRouteImport } from './routes/_main/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
 import { Route as DemoMcpTodosRouteImport } from './routes/demo/mcp-todos'
@@ -23,14 +22,18 @@ import { Route as DemoBetterAuthRouteImport } from './routes/demo/better-auth'
 import { Route as DemoAiStructuredRouteImport } from './routes/demo/ai-structured'
 import { Route as DemoAiImageRouteImport } from './routes/demo/ai-image'
 import { Route as DemoAiChatRouteImport } from './routes/demo/ai-chat'
+import { Route as DemoTanstackQueryRouteRouteImport } from './routes/demo/tanstack-query/route'
+import { Route as DemoTanstackQueryIndexRouteImport } from './routes/demo/tanstack-query/index'
 import { Route as DemoGuitarsIndexRouteImport } from './routes/demo/guitars/index'
 import { Route as MainCommunityIndexRouteImport } from './routes/_main/community/index'
 import { Route as DemoUiAvatarWithStatusRouteImport } from './routes/demo/ui/avatarWithStatus'
+import { Route as DemoTanstackQueryInfiniteQueryRouteImport } from './routes/demo/tanstack-query/infinite-query'
 import { Route as DemoGuitarsGuitarIdRouteImport } from './routes/demo/guitars/$guitarId'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
 import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
 import { Route as DemoApiMcpTodosRouteImport } from './routes/demo/api.mcp-todos'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
+import { Route as DemoUiAvatarWithStatus80RouteImport } from './routes/demo/ui/avatarWithStatus/80'
 import { Route as DemoApiAiTtsRouteImport } from './routes/demo/api.ai.tts'
 import { Route as DemoApiAiTranscriptionRouteImport } from './routes/demo/api.ai.transcription'
 import { Route as DemoApiAiStructuredRouteImport } from './routes/demo/api.ai.structured'
@@ -54,11 +57,6 @@ const MainRouteRoute = MainRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTableRoute = DemoTableRouteImport.update({
@@ -106,6 +104,16 @@ const DemoAiChatRoute = DemoAiChatRouteImport.update({
   path: '/demo/ai-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoTanstackQueryRouteRoute = DemoTanstackQueryRouteRouteImport.update({
+  id: '/demo/tanstack-query',
+  path: '/demo/tanstack-query',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoTanstackQueryIndexRoute = DemoTanstackQueryIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DemoTanstackQueryRouteRoute,
+} as any)
 const DemoGuitarsIndexRoute = DemoGuitarsIndexRouteImport.update({
   id: '/demo/guitars/',
   path: '/demo/guitars/',
@@ -121,6 +129,12 @@ const DemoUiAvatarWithStatusRoute = DemoUiAvatarWithStatusRouteImport.update({
   path: '/demo/ui/avatarWithStatus',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoTanstackQueryInfiniteQueryRoute =
+  DemoTanstackQueryInfiniteQueryRouteImport.update({
+    id: '/infinite-query',
+    path: '/infinite-query',
+    getParentRoute: () => DemoTanstackQueryRouteRoute,
+  } as any)
 const DemoGuitarsGuitarIdRoute = DemoGuitarsGuitarIdRouteImport.update({
   id: '/demo/guitars/$guitarId',
   path: '/demo/guitars/$guitarId',
@@ -146,6 +160,12 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoUiAvatarWithStatus80Route =
+  DemoUiAvatarWithStatus80RouteImport.update({
+    id: '/80',
+    path: '/80',
+    getParentRoute: () => DemoUiAvatarWithStatusRoute,
+  } as any)
 const DemoApiAiTtsRoute = DemoApiAiTtsRouteImport.update({
   id: '/demo/api/ai/tts',
   path: '/demo/api/ai/tts',
@@ -176,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/mcp': typeof McpRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryRouteRouteWithChildren
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
@@ -185,20 +206,22 @@ export interface FileRoutesByFullPath {
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
-  '/demo/ui/avatarWithStatus': typeof DemoUiAvatarWithStatusRoute
+  '/demo/tanstack-query/infinite-query': typeof DemoTanstackQueryInfiniteQueryRoute
+  '/demo/ui/avatarWithStatus': typeof DemoUiAvatarWithStatusRouteWithChildren
   '/community/': typeof MainCommunityIndexRoute
   '/demo/guitars/': typeof DemoGuitarsIndexRoute
+  '/demo/tanstack-query/': typeof DemoTanstackQueryIndexRoute
   '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
   '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
   '/demo/api/ai/tts': typeof DemoApiAiTtsRoute
+  '/demo/ui/avatarWithStatus/80': typeof DemoUiAvatarWithStatus80Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -213,20 +236,22 @@ export interface FileRoutesByTo {
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
-  '/demo/ui/avatarWithStatus': typeof DemoUiAvatarWithStatusRoute
+  '/demo/tanstack-query/infinite-query': typeof DemoTanstackQueryInfiniteQueryRoute
+  '/demo/ui/avatarWithStatus': typeof DemoUiAvatarWithStatusRouteWithChildren
   '/community': typeof MainCommunityIndexRoute
   '/demo/guitars': typeof DemoGuitarsIndexRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryIndexRoute
   '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
   '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
   '/demo/api/ai/tts': typeof DemoApiAiTtsRoute
+  '/demo/ui/avatarWithStatus/80': typeof DemoUiAvatarWithStatus80Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -234,6 +259,7 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/mcp': typeof McpRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryRouteRouteWithChildren
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
   '/demo/ai-structured': typeof DemoAiStructuredRoute
@@ -243,20 +269,22 @@ export interface FileRoutesById {
   '/demo/mcp-todos': typeof DemoMcpTodosRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/mcp-todos': typeof DemoApiMcpTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
   '/demo/form/simple': typeof DemoFormSimpleRoute
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
-  '/demo/ui/avatarWithStatus': typeof DemoUiAvatarWithStatusRoute
+  '/demo/tanstack-query/infinite-query': typeof DemoTanstackQueryInfiniteQueryRoute
+  '/demo/ui/avatarWithStatus': typeof DemoUiAvatarWithStatusRouteWithChildren
   '/_main/community/': typeof MainCommunityIndexRoute
   '/demo/guitars/': typeof DemoGuitarsIndexRoute
+  '/demo/tanstack-query/': typeof DemoTanstackQueryIndexRoute
   '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
   '/demo/api/ai/structured': typeof DemoApiAiStructuredRoute
   '/demo/api/ai/transcription': typeof DemoApiAiTranscriptionRoute
   '/demo/api/ai/tts': typeof DemoApiAiTtsRoute
+  '/demo/ui/avatarWithStatus/80': typeof DemoUiAvatarWithStatus80Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -264,6 +292,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/mcp'
+    | '/demo/tanstack-query'
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
@@ -273,20 +302,22 @@ export interface FileRouteTypes {
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/table'
-    | '/demo/tanstack-query'
     | '/api/auth/$'
     | '/demo/api/mcp-todos'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/guitars/$guitarId'
+    | '/demo/tanstack-query/infinite-query'
     | '/demo/ui/avatarWithStatus'
     | '/community/'
     | '/demo/guitars/'
+    | '/demo/tanstack-query/'
     | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
     | '/demo/api/ai/tts'
+    | '/demo/ui/avatarWithStatus/80'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -301,26 +332,29 @@ export interface FileRouteTypes {
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/table'
-    | '/demo/tanstack-query'
     | '/api/auth/$'
     | '/demo/api/mcp-todos'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/guitars/$guitarId'
+    | '/demo/tanstack-query/infinite-query'
     | '/demo/ui/avatarWithStatus'
     | '/community'
     | '/demo/guitars'
+    | '/demo/tanstack-query'
     | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
     | '/demo/api/ai/tts'
+    | '/demo/ui/avatarWithStatus/80'
   id:
     | '__root__'
     | '/'
     | '/_main'
     | '/about'
     | '/mcp'
+    | '/demo/tanstack-query'
     | '/demo/ai-chat'
     | '/demo/ai-image'
     | '/demo/ai-structured'
@@ -330,20 +364,22 @@ export interface FileRouteTypes {
     | '/demo/mcp-todos'
     | '/demo/store'
     | '/demo/table'
-    | '/demo/tanstack-query'
     | '/api/auth/$'
     | '/demo/api/mcp-todos'
     | '/demo/form/address'
     | '/demo/form/simple'
     | '/demo/guitars/$guitarId'
+    | '/demo/tanstack-query/infinite-query'
     | '/demo/ui/avatarWithStatus'
     | '/_main/community/'
     | '/demo/guitars/'
+    | '/demo/tanstack-query/'
     | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
     | '/demo/api/ai/structured'
     | '/demo/api/ai/transcription'
     | '/demo/api/ai/tts'
+    | '/demo/ui/avatarWithStatus/80'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -351,6 +387,7 @@ export interface RootRouteChildren {
   MainRouteRoute: typeof MainRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   McpRoute: typeof McpRoute
+  DemoTanstackQueryRouteRoute: typeof DemoTanstackQueryRouteRouteWithChildren
   DemoAiChatRoute: typeof DemoAiChatRoute
   DemoAiImageRoute: typeof DemoAiImageRoute
   DemoAiStructuredRoute: typeof DemoAiStructuredRoute
@@ -360,13 +397,12 @@ export interface RootRouteChildren {
   DemoMcpTodosRoute: typeof DemoMcpTodosRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTableRoute: typeof DemoTableRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   DemoApiMcpTodosRoute: typeof DemoApiMcpTodosRoute
   DemoFormAddressRoute: typeof DemoFormAddressRoute
   DemoFormSimpleRoute: typeof DemoFormSimpleRoute
   DemoGuitarsGuitarIdRoute: typeof DemoGuitarsGuitarIdRoute
-  DemoUiAvatarWithStatusRoute: typeof DemoUiAvatarWithStatusRoute
+  DemoUiAvatarWithStatusRoute: typeof DemoUiAvatarWithStatusRouteWithChildren
   DemoGuitarsIndexRoute: typeof DemoGuitarsIndexRoute
   DemoApiAiChatRoute: typeof DemoApiAiChatRoute
   DemoApiAiImageRoute: typeof DemoApiAiImageRoute
@@ -403,13 +439,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/table': {
@@ -475,6 +504,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoAiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo/tanstack-query': {
+      id: '/demo/tanstack-query'
+      path: '/demo/tanstack-query'
+      fullPath: '/demo/tanstack-query'
+      preLoaderRoute: typeof DemoTanstackQueryRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/tanstack-query/': {
+      id: '/demo/tanstack-query/'
+      path: '/'
+      fullPath: '/demo/tanstack-query/'
+      preLoaderRoute: typeof DemoTanstackQueryIndexRouteImport
+      parentRoute: typeof DemoTanstackQueryRouteRoute
+    }
     '/demo/guitars/': {
       id: '/demo/guitars/'
       path: '/demo/guitars'
@@ -495,6 +538,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/demo/ui/avatarWithStatus'
       preLoaderRoute: typeof DemoUiAvatarWithStatusRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/demo/tanstack-query/infinite-query': {
+      id: '/demo/tanstack-query/infinite-query'
+      path: '/infinite-query'
+      fullPath: '/demo/tanstack-query/infinite-query'
+      preLoaderRoute: typeof DemoTanstackQueryInfiniteQueryRouteImport
+      parentRoute: typeof DemoTanstackQueryRouteRoute
     }
     '/demo/guitars/$guitarId': {
       id: '/demo/guitars/$guitarId'
@@ -530,6 +580,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/demo/ui/avatarWithStatus/80': {
+      id: '/demo/ui/avatarWithStatus/80'
+      path: '/80'
+      fullPath: '/demo/ui/avatarWithStatus/80'
+      preLoaderRoute: typeof DemoUiAvatarWithStatus80RouteImport
+      parentRoute: typeof DemoUiAvatarWithStatusRoute
     }
     '/demo/api/ai/tts': {
       id: '/demo/api/ai/tts'
@@ -581,11 +638,42 @@ const MainRouteRouteWithChildren = MainRouteRoute._addFileChildren(
   MainRouteRouteChildren,
 )
 
+interface DemoTanstackQueryRouteRouteChildren {
+  DemoTanstackQueryInfiniteQueryRoute: typeof DemoTanstackQueryInfiniteQueryRoute
+  DemoTanstackQueryIndexRoute: typeof DemoTanstackQueryIndexRoute
+}
+
+const DemoTanstackQueryRouteRouteChildren: DemoTanstackQueryRouteRouteChildren =
+  {
+    DemoTanstackQueryInfiniteQueryRoute: DemoTanstackQueryInfiniteQueryRoute,
+    DemoTanstackQueryIndexRoute: DemoTanstackQueryIndexRoute,
+  }
+
+const DemoTanstackQueryRouteRouteWithChildren =
+  DemoTanstackQueryRouteRoute._addFileChildren(
+    DemoTanstackQueryRouteRouteChildren,
+  )
+
+interface DemoUiAvatarWithStatusRouteChildren {
+  DemoUiAvatarWithStatus80Route: typeof DemoUiAvatarWithStatus80Route
+}
+
+const DemoUiAvatarWithStatusRouteChildren: DemoUiAvatarWithStatusRouteChildren =
+  {
+    DemoUiAvatarWithStatus80Route: DemoUiAvatarWithStatus80Route,
+  }
+
+const DemoUiAvatarWithStatusRouteWithChildren =
+  DemoUiAvatarWithStatusRoute._addFileChildren(
+    DemoUiAvatarWithStatusRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MainRouteRoute: MainRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   McpRoute: McpRoute,
+  DemoTanstackQueryRouteRoute: DemoTanstackQueryRouteRouteWithChildren,
   DemoAiChatRoute: DemoAiChatRoute,
   DemoAiImageRoute: DemoAiImageRoute,
   DemoAiStructuredRoute: DemoAiStructuredRoute,
@@ -595,13 +683,12 @@ const rootRouteChildren: RootRouteChildren = {
   DemoMcpTodosRoute: DemoMcpTodosRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTableRoute: DemoTableRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   DemoApiMcpTodosRoute: DemoApiMcpTodosRoute,
   DemoFormAddressRoute: DemoFormAddressRoute,
   DemoFormSimpleRoute: DemoFormSimpleRoute,
   DemoGuitarsGuitarIdRoute: DemoGuitarsGuitarIdRoute,
-  DemoUiAvatarWithStatusRoute: DemoUiAvatarWithStatusRoute,
+  DemoUiAvatarWithStatusRoute: DemoUiAvatarWithStatusRouteWithChildren,
   DemoGuitarsIndexRoute: DemoGuitarsIndexRoute,
   DemoApiAiChatRoute: DemoApiAiChatRoute,
   DemoApiAiImageRoute: DemoApiAiImageRoute,

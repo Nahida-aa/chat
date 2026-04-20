@@ -4,6 +4,14 @@
       "name": "🚀 web",
       "path": "apps/web"
     },
+        {
+      "name": "app-tauri",
+      "path": "apps/app-tauri"
+    },
+            {
+      "name": "app",
+      "path": "apps/app"
+    },
     {
       "name": "📦 packages",
       "path": "packages"
